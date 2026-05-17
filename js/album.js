@@ -1,5 +1,5 @@
 // =============================================
-// MINHA CÉLULA E +10 · RL CABO FRIO · 2026
+// MINHA CÉLULA EM CAMPO NA COPA · RL CABO FRIO · 2026
 // js/album.js
 // =============================================
 
@@ -73,7 +73,7 @@ async function carregarAlbum() {
 function renderAlbumHeader(celula) {
   document.getElementById('albumHeader').innerHTML = `
     <h2>📘 ${celula?.nome || 'Minha Célula'}</h2>
-    <p>Técnico: ${celula?.lider_nome || '—'} · Minha Célula e +10 · RL Cabo Frio · 2026</p>
+    <p>Técnico: ${celula?.lider_nome || '—'} · Minha Célula em Campo da Copa · RL Cabo Frio · 2026</p>
   `;
 }
 

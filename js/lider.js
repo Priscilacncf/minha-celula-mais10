@@ -1,5 +1,5 @@
 // =============================================
-// MINHA CÉLULA E +10 · RL CABO FRIO · 2026
+// MINHA CÉLULA EM CAMPO NA COPA · RL CABO FRIO · 2026
 // js/lider.js
 // =============================================
 

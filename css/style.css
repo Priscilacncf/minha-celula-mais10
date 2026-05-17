@@ -1,6 +1,6 @@
 /* =============================================
-   MINHA CÉLULA E +10 · COPA DAS VIDAS 2026
-   Radicais Livres Rio de Janeiro
+   MINHA CÉLULA EM CAMPO NA COPA
+   Radicais Livres Cabo Frio · 2026
    style.css
    ============================================= */
 
@@ -54,7 +54,17 @@ body {
 .logo-area  { display: flex; align-items: center; gap: 0.75rem; }
 .logo-icon  { font-size: 2rem; }
 .logo-title { font-size: 1rem; font-weight: 800; color: var(--amarelo); letter-spacing: 1px; }
-.logo-sub   { font-size: 0.72rem; color: var(--texto-sub); }
+.logo-sub   { font-size: 0.72rem; color: var(--texto-sub); display: flex; align-items: center; gap: 3px; }
+
+/* ── Logo Radicais Livres ── */
+.logo-rl {
+  height: 16px;
+  width: auto;
+  vertical-align: middle;
+  margin-right: 3px;
+  /* Logo preta com fundo transparente → inverte para branco no header escuro */
+  filter: invert(1);
+}
 
 .header-nav { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 
@@ -118,6 +128,28 @@ body {
 .periodo-label {
   font-size: 0.8rem; color: var(--texto-sub);
   margin-bottom: 0.75rem; font-style: italic;
+}
+
+/* =============================================
+   FILTRO DATA CUSTOMIZADA
+   ============================================= */
+.filtro-data-wrapper {
+  display: flex; flex-direction: column;
+  gap: 0.5rem; align-items: flex-end;
+}
+
+.filtro-data-custom {
+  display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+}
+
+.filtro-data-custom input[type="date"] {
+  background: var(--cinza-card); color: var(--texto);
+  border: 1px solid var(--cinza-border); border-radius: 8px;
+  padding: 0.35rem 0.75rem; font-size: 0.82rem; width: auto;
+}
+
+.filtro-data-custom input[type="date"]:focus {
+  border-color: var(--verde); outline: none;
 }
 
 /* =============================================
@@ -346,6 +378,7 @@ body {
 .tipo-card h4    { font-size: 0.8rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 0.25rem; }
 .tipo-card p     { font-size: 0.78rem; color: var(--texto-sub); }
 .tipo-basica     { background: rgba(0,156,59,0.1);   border-color: var(--verde); }
+.tipo-capitao    { background: rgba(255,215,0,0.15); border-color: var(--ouro); }
 .tipo-visitante  { background: rgba(255,223,0,0.1);  border-color: var(--amarelo); }
 .tipo-convertido { background: rgba(0,39,118,0.3);   border-color: #4488ff; }
 .tipo-testemunho { background: rgba(168,85,247,0.1); border-color: var(--lendaria); }
@@ -437,6 +470,45 @@ select {
 .figurinha-vazia .empty-txt  { font-size: 0.7rem; color: var(--texto-sub); margin-top: 0.3rem; }
 
 /* =============================================
+   CAPITÃO DO TIME
+   ============================================= */
+.figurinha-capitao {
+  background: linear-gradient(135deg, #fffbe6 0%, #fff3b0 100%);
+  border-radius: 10px; padding: 0.5rem; text-align: center;
+  transition: transform 0.2s; border: 2px solid var(--ouro);
+  color: #111; position: relative; overflow: hidden;
+  box-shadow: 0 0 15px rgba(255,215,0,0.4);
+}
+.figurinha-capitao:hover { transform: scale(1.05); z-index: 2; }
+.figurinha-capitao::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--ouro), #fff, var(--ouro));
+}
+
+.badge-capitao {
+  background: linear-gradient(135deg, var(--ouro), #ff9900);
+  color: #333; font-size: 0.65rem; font-weight: 900;
+  padding: 0.2rem 0.5rem; border-radius: 10px;
+  margin-top: 0.3rem; display: inline-block;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+
+.capitao-bracadeira {
+  position: absolute; top: 6px; right: 6px;
+  background: var(--ouro); color: #333;
+  font-size: 0.6rem; font-weight: 900;
+  width: 20px; height: 20px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.capitao-atual {
+  background: rgba(255,215,0,0.08);
+  border: 1px solid var(--ouro);
+  border-radius: var(--radius); padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* =============================================
    LOGIN
    ============================================= */
 .login-section {
@@ -487,8 +559,7 @@ input:focus, select:focus { outline: none; border-color: var(--verde); }
 .upload-hint { font-size: 0.75rem; color: var(--texto-sub); margin-top: 0.25rem; }
 .foto-preview {
   width: 100px; height: 100px; border-radius: 50%; object-fit: cover;
-  margin-top: 0.75rem; border: 2px solid var(--verde);
-  display: block;
+  margin-top: 0.75rem; border: 2px solid var(--verde); display: block;
 }
 
 /* =============================================
@@ -594,6 +665,8 @@ input:focus, select:focus { outline: none; border-color: var(--verde); }
   .coracao-regras        { flex-direction: column; gap: 1rem; }
   .section-title-row     { flex-direction: column; align-items: flex-start; }
   .filtro-periodo        { width: 100%; }
+  .filtro-data-wrapper   { align-items: flex-start; width: 100%; }
+  .filtro-data-custom    { width: 100%; }
 }
 
 @media (max-width: 480px) {
@@ -607,4 +680,5 @@ input:focus, select:focus { outline: none; border-color: var(--verde); }
   .tabs                  { flex-direction: column; }
   .coracao-numero        { font-size: 3.5rem; }
   .filtro-btn            { font-size: 0.72rem; padding: 0.3rem 0.65rem; }
+  .logo-rl               { height: 13px; }
 }

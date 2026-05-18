@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Álbum · Minha Célula em Campo na Copa · RL Cabo Frio</title>
-  <link rel="stylesheet" href="css/style.css"/>
+  <title>Minha Célula em Campo na Copa · Radicais Livres Cabo Frio</title>
+  <link rel="stylesheet" href="css/style.css" />
 
   <!-- PWA -->
   <link rel="manifest" href="/manifest.json"/>
@@ -16,7 +16,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body class="album-page">
+<body class="dashboard-page">
 
   <header class="header">
     <div class="header-content">
@@ -37,8 +37,8 @@
           style="display:none">
           📲 Instalar App
         </button>
-        <a href="index.html" class="nav-link">🏆 Dashboard</a>
-        <a href="album.html" class="nav-link active">📘 Álbum</a>
+        <a href="index.html" class="nav-link active">🏆 Dashboard</a>
+        <a href="album.html" class="nav-link">📘 Álbum</a>
         <a href="lider.html" class="nav-link nav-lider">🔐 Área do Líder</a>
       </nav>
     </div>
@@ -46,74 +46,262 @@
 
   <main class="container">
 
-    <section class="section">
-      <h2 class="section-title">📘 Álbum de Figurinhas — Copa das Vidas 2026</h2>
-      <p class="album-info" style="margin-bottom:1.5rem">
-        Cada conquista e cada pessoa nova vira uma figurinha no álbum da célula.
-        <strong>Espaços vazios representam as vidas que ainda precisamos alcançar para Jesus.</strong>
-      </p>
-      <div class="tipos-grid">
-        <div class="tipo-card tipo-basica">
-          <span>👥</span>
-          <h4>BÁSICAS</h4>
-          <p>Membros ativos da célula</p>
+    <!-- BANNER -->
+    <section class="banner">
+      <div class="banner-text">
+        <h2>MINHA CÉLULA EM CAMPO NA COPA</h2>
+        <p>"O nosso campo é o mundo, a nossa bola é a Palavra, e o nosso título é a Salvação."</p>
+      </div>
+      <div class="banner-stats">
+        <div class="stat-card">
+          <span class="stat-number" id="totalVidas">--</span>
+          <span class="stat-label">Vidas Alcançadas</span>
         </div>
-        <div class="tipo-card tipo-capitao">
-          <span>🅒</span>
-          <h4>CAPITÃO</h4>
-          <p>Líder em campo</p>
+        <div class="stat-card">
+          <span class="stat-number" id="totalFigurinhas">--</span>
+          <span class="stat-label">Figurinhas no Álbum</span>
         </div>
-        <div class="tipo-card tipo-visitante">
-          <span>🌱</span>
-          <h4>VISITANTES</h4>
-          <p>Conhecendo a célula</p>
-        </div>
-        <div class="tipo-card tipo-testemunho">
-          <span>🌟</span>
-          <h4>TESTEMUNHOS</h4>
-          <p>Histórias de transformação</p>
+        <div class="stat-card">
+          <span class="stat-number" id="totalCelulas">--</span>
+          <span class="stat-label">Células em Campo</span>
         </div>
       </div>
     </section>
 
+    <!-- VISÃO -->
     <section class="section">
-      <div class="celula-selector">
-        <label for="selectCelula">Selecione a Célula:</label>
-        <select id="selectCelula" onchange="carregarAlbum()">
-          <option value="">-- Escolha uma célula --</option>
-        </select>
+      <h2 class="section-title">👁️ Nossa Visão</h2>
+      <div class="visao-card">
+        <p>Salvar os perdidos, consolidar os frágeis na fé, fortalecer as células
+        e treinar novos líderes.
+        <strong>Cada alma conta para a nossa seleção!</strong></p>
       </div>
     </section>
 
-    <div id="albumContainer" style="display:none">
+    <!-- DURANTE A COPA -->
+    <section class="section">
+      <h2 class="section-title">🏟️ Durante a Copa</h2>
+      <div class="visao-card" style="border-color:var(--amarelo)">
+        <p>Durante a Copa do Mundo, vamos nos reunir no prédio as células,
+        não somente para ver o jogo, mas para ter comunhão e
+        <strong>vincular os novos jogadores à vida da igreja</strong>.
+        Dependendo da célula, o líder pode fazer isso juntamente com o anfitrião.</p>
+      </div>
+    </section>
 
-      <div class="album-header" id="albumHeader"></div>
-      <div class="album-progresso" id="albumProgresso"></div>
+    <!-- OBJETIVOS -->
+    <section class="section">
+      <h2 class="section-title">🎯 Objetivos do Projeto</h2>
+      <div class="conceito-grid">
+        <div class="conceito-card">
+          <span class="conceito-icon">🌍</span>
+          <h3>Alcançar</h3>
+          <p>Trazer novos jovens e adolescentes para o Reino de Deus.</p>
+        </div>
+        <div class="conceito-card">
+          <span class="conceito-icon">💪</span>
+          <h3>Fortalecer</h3>
+          <p>Consolidar a estrutura e a unidade de cada célula.</p>
+        </div>
+        <div class="conceito-card">
+          <span class="conceito-icon">🤝</span>
+          <h3>Pertencer</h3>
+          <p>Criar um ambiente onde todos se sintam parte da família.</p>
+        </div>
+      </div>
+    </section>
 
-      <!-- CAPITÃO -->
-      <section class="section">
-        <h3 class="section-subtitle">🅒 Capitão do Time</h3>
-        <div id="gridCapitao" class="figurinhas-grid"></div>
-      </section>
+    <!-- CONCEITO -->
+    <section class="section">
+      <h2 class="section-title">🎮 O Conceito do Jogo</h2>
+      <div class="conceito-grid">
+        <div class="conceito-card">
+          <span class="conceito-icon">👤</span>
+          <h3>Cada Jovem</h3>
+          <p>Um jogador convocado para a seleção.</p>
+        </div>
+        <div class="conceito-card">
+          <span class="conceito-icon">⚡</span>
+          <h3>Cada Célula</h3>
+          <p>Uma seleção em busca do título.</p>
+        </div>
+        <div class="conceito-card">
+          <span class="conceito-icon">🧠</span>
+          <h3>O Líder</h3>
+          <p>O técnico estrategista do time.</p>
+        </div>
+        <div class="conceito-card">
+          <span class="conceito-icon">🏆</span>
+          <h3>A Missão</h3>
+          <p>Ganhar vidas e completar o álbum.</p>
+        </div>
+      </div>
+    </section>
 
-      <!-- MEMBROS -->
-      <section class="section">
-        <h3 class="section-subtitle">👥 Elenco da Célula — Figurinhas Básicas</h3>
-        <div class="figurinhas-grid" id="gridMembros"></div>
-      </section>
+    <!-- CORAÇÃO -->
+    <section class="section">
+      <h2 class="section-title">❤️ O Coração do Projeto</h2>
+      <div class="coracao-card">
+        <div class="coracao-numero">+10</div>
+        <h3>VIDAS TRANSFORMADAS</h3>
+        <p>O desafio de cada jovem é levar <strong>10 pessoas</strong> ao encontro de Jesus.</p>
+        <div class="coracao-regras">
+          <span>⚽ 1 nova vida = 1 figurinha</span>
+          <span>📘 Página completa = Missão cumprida!</span>
+        </div>
+      </div>
+    </section>
 
-      <!-- VISITANTES -->
-      <section class="section">
-        <h3 class="section-subtitle">🌟 +10 na Copa das Vidas — Vidas Alcançadas</h3>
-        <p class="album-info">
-          ⚽ <strong>1 nova vida = 1 figurinha.</strong>
-          Visitantes com <strong>3 ou mais eventos</strong> ganham figurinha no álbum!
-          <br/>Página completa = Missão cumprida! 🏆
-        </p>
-        <div class="figurinhas-grid" id="gridVisitantes"></div>
-      </section>
+    <!-- GAMIFICAÇÃO -->
+    <section class="section">
+      <h2 class="section-title">🎮 Gamificação: Quem vai ganhar mais vidas para Jesus?</h2>
+      <div class="conceito-grid">
+        <div class="conceito-card">
+          <span class="conceito-icon">📊</span>
+          <h3>Ranking de Células</h3>
+          <p>Quem está liderando a tabela?</p>
+        </div>
+        <div class="conceito-card">
+          <span class="conceito-icon">🎯</span>
+          <h3>Desafios Semanais</h3>
+          <p>Metas dinâmicas para o time.</p>
+        </div>
+        <div class="conceito-card">
+          <span class="conceito-icon">📈</span>
+          <h3>Progresso Visível</h3>
+          <p>Gráficos e placares acompanhados em tempo real.</p>
+        </div>
+      </div>
+    </section>
 
-    </div>
+    <!-- ARTILHEIRO GERAL -->
+    <section class="section">
+      <div class="section-title-row">
+        <h2 class="section-title" style="margin-bottom:0;border:none">
+          🥇 Artilheiro do Período
+        </h2>
+        <div class="filtro-periodo">
+          <button class="filtro-btn active"
+            onclick="filtrarPeriodo('semana', this)">Esta Semana</button>
+          <button class="filtro-btn"
+            onclick="filtrarPeriodo('2semanas', this)">2 Semanas</button>
+          <button class="filtro-btn"
+            onclick="filtrarPeriodo('mes', this)">Este Mês</button>
+          <button class="filtro-btn"
+            onclick="filtrarPeriodo('total', this)">Total Geral</button>
+        </div>
+      </div>
+      <p id="periodoLabel" class="periodo-label">📅 Exibindo: Esta Semana</p>
+      <div id="artilheiroGeral" class="artilheiro-card loading">
+        <p>Carregando...</p>
+      </div>
+    </section>
+
+    <!-- RANKING DE CÉLULAS -->
+    <section class="section">
+      <h2 class="section-title">📊 Ranking de Células</h2>
+      <div id="rankingCelulas" class="ranking-table-wrapper">
+        <p class="loading-text">Carregando...</p>
+      </div>
+    </section>
+
+    <!-- ARTILHEIRO POR CÉLULA -->
+    <section class="section">
+      <div class="section-title-row">
+        <h2 class="section-title" style="margin-bottom:0;border:none">
+          ⚽ Artilheiro por Célula
+        </h2>
+        <div class="filtro-data-wrapper">
+          <div class="filtro-periodo">
+            <button class="filtro-btn active"
+              onclick="filtrarPeriodoCelula('semana', this)">Esta Semana</button>
+            <button class="filtro-btn"
+              onclick="filtrarPeriodoCelula('2semanas', this)">2 Semanas</button>
+            <button class="filtro-btn"
+              onclick="filtrarPeriodoCelula('mes', this)">Este Mês</button>
+            <button class="filtro-btn"
+              onclick="filtrarPeriodoCelula('total', this)">Total</button>
+            <button class="filtro-btn"
+              onclick="filtrarPeriodoCelula('custom', this)">📅 Data</button>
+          </div>
+          <div id="filtroDataCustom" class="filtro-data-custom" style="display:none">
+            <input type="date" id="dataInicio" onchange="aplicarFiltroData()"/>
+            <span style="color:var(--texto-sub)">até</span>
+            <input type="date" id="dataFim" onchange="aplicarFiltroData()"/>
+          </div>
+        </div>
+      </div>
+      <p id="periodoLabelCelula" class="periodo-label">📅 Exibindo: Esta Semana</p>
+      <div id="artilheirosCelulas" class="artilheiros-grid">
+        <p class="loading-text">Carregando...</p>
+      </div>
+    </section>
+
+    <!-- RARIDADES -->
+    <section class="section">
+      <h2 class="section-title">🌟 Raridades — Desafios da Temporada</h2>
+      <div class="desafios-grid">
+        <div class="desafio-card bronze">
+          <span class="desafio-icon">🥉</span>
+          <h3>BRONZE</h3>
+          <p class="desafio-como">Como conquistar:</p>
+          <p>Frequentou 4 semanas seguidas</p>
+          <p class="desafio-impacto">Impacto: <strong>Comprometimento</strong></p>
+        </div>
+        <div class="desafio-card prata">
+          <span class="desafio-icon">🥈</span>
+          <h3>PRATA</h3>
+          <p class="desafio-como">Como conquistar:</p>
+          <p>Trouxe 1 convidado novo</p>
+          <p class="desafio-impacto">Impacto: <strong>Expansão</strong></p>
+        </div>
+        <div class="desafio-card ouro">
+          <span class="desafio-icon">🥇</span>
+          <h3>OURO</h3>
+          <p class="desafio-como">Como conquistar:</p>
+          <p>Testemunho impactante na célula</p>
+          <p class="desafio-impacto">Impacto: <strong>Edificação</strong></p>
+        </div>
+        <div class="desafio-card lendaria">
+          <span class="desafio-icon">💎</span>
+          <h3>LENDÁRIA</h3>
+          <p class="desafio-como">Como conquistar:</p>
+          <p>Trouxe +5 amigos para o evento</p>
+          <p class="desafio-impacto">Impacto: <strong>Multiplicação</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CRONOGRAMA -->
+    <section class="section">
+      <h2 class="section-title">📅 Cronograma da Temporada</h2>
+      <div class="cronograma-grid">
+        <div class="cronograma-card">
+          <span class="crono-num">01</span>
+          <span class="crono-icon">📦</span>
+          <h3>Lançamento</h3>
+          <p>Entrega dos Álbuns</p>
+        </div>
+        <div class="cronograma-card">
+          <span class="crono-num">02</span>
+          <span class="crono-icon">📣</span>
+          <h3>Convocação</h3>
+          <p>Primeiros +10</p>
+        </div>
+        <div class="cronograma-card">
+          <span class="crono-num">03</span>
+          <span class="crono-icon">🤝</span>
+          <h3>Amistosos</h3>
+          <p>Intercâmbio de Células</p>
+        </div>
+        <div class="cronograma-card">
+          <span class="crono-num">04</span>
+          <span class="crono-icon">🏆</span>
+          <h3>A Grande Final</h3>
+          <p>Celebração de Vidas</p>
+        </div>
+      </div>
+    </section>
 
   </main>
 
@@ -122,7 +310,7 @@
   </footer>
 
   <script src="js/supabase-config.js"></script>
-  <script src="js/album.js"></script>
+  <script src="js/dashboard.js"></script>
   <script src="js/pwa.js"></script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 // =============================================
-// MINHA CÉLULA EM CAMPO NA COPA · RL CABO FRIO · 2026
+// MINHA CÉLULA EM CAMPO NA COPA
+// Radicais Livres Cabo Frio · 2026
 // js/lider.js
 // =============================================
 
@@ -10,6 +11,7 @@ window.addEventListener('load', () => {
   definirDataHoje();
 });
 
+// ── Define data de hoje nos campos de data
 function definirDataHoje() {
   const hoje = new Date().toISOString().split('T')[0];
   ['visitanteData', 'presencaData'].forEach(id => {
@@ -84,6 +86,7 @@ async function fazerLogin() {
       return;
     }
 
+    // Login bem-sucedido
     celulaLogada = celula;
 
     document.getElementById('loginSection').style.display = 'none';
@@ -94,7 +97,7 @@ async function fazerLogin() {
       <div>
         <h2>⚽ ${celula.nome}</h2>
         <p>Bem-vindo, técnico <strong>${celula.lider_nome}</strong>!
-           · Minha Célula e +10 · RL Cabo Frio</p>
+           · Minha Célula em Campo na Copa · RL Cabo Frio</p>
       </div>
       <span style="color:var(--amarelo);font-size:0.85rem">🏆 Vamos a campo!</span>
     `;
@@ -173,12 +176,52 @@ function previewFotoCapitao(event) {
 
 async function uploadFoto(file, pasta) {
   if (!file) return null;
+
   const ext      = file.name.split('.').pop();
   const fileName = `${pasta}/${Date.now()}.${ext}`;
-  const { error } = await db.storage.from('fotos').upload(fileName, file);
-  if (error) { console.error('❌ Erro upload:', error.message); return null; }
-  const { data } = db.storage.from('fotos').getPublicUrl(fileName);
+
+  const { error } = await db.storage
+    .from('fotos')
+    .upload(fileName, file);
+
+  if (error) {
+    console.error('❌ Erro upload:', error.message);
+    return null;
+  }
+
+  const { data } = db.storage
+    .from('fotos')
+    .getPublicUrl(fileName);
+
   return data.publicUrl;
+}
+
+// ══════════════════════════════════════════════
+// NOTIFICAÇÕES
+// ══════════════════════════════════════════════
+
+async function dispararNotificacao(titulo, corpo, tipo = 'geral', url = '/') {
+  try {
+    // 1. Notificação local (dispositivo atual)
+    if (typeof notificarLocal === 'function') {
+      await notificarLocal(titulo, corpo, url);
+    }
+
+    // 2. Salvar no Supabase para histórico e outros dispositivos
+    await db.from('notificacoes').insert({
+      titulo,
+      corpo,
+      tipo,
+      url,
+      criado_em: new Date().toISOString()
+    });
+
+    console.log(`🔔 Notificação disparada: ${titulo}`);
+
+  } catch (err) {
+    // Notificação é secundária — não bloqueia o fluxo principal
+    console.warn('⚠️ Erro ao disparar notificação:', err.message);
+  }
 }
 
 // ══════════════════════════════════════════════
@@ -187,27 +230,31 @@ async function uploadFoto(file, pasta) {
 
 async function carregarMembrosSelect() {
   if (!celulaLogada) return;
+
   const { data: membros } = await db
     .from('membros')
     .select('id, nome')
     .eq('celula_id', celulaLogada.id)
     .order('nome');
 
+  // Select de visitante (quem trouxe)
   const select = document.getElementById('visitanteMembro');
   select.innerHTML = '<option value="">-- Selecione o membro --</option>';
   (membros || []).forEach(m => {
-    const opt = document.createElement('option');
-    opt.value = m.id; opt.textContent = m.nome;
+    const opt       = document.createElement('option');
+    opt.value       = m.id;
+    opt.textContent = m.nome;
     select.appendChild(opt);
   });
 
-  // Também atualiza o select do capitão
+  // Select do capitão
   const selectCap = document.getElementById('capitaoSelect');
   if (selectCap) {
     selectCap.innerHTML = '<option value="">-- Selecione o membro --</option>';
     (membros || []).forEach(m => {
-      const opt = document.createElement('option');
-      opt.value = m.id; opt.textContent = m.nome;
+      const opt       = document.createElement('option');
+      opt.value       = m.id;
+      opt.textContent = m.nome;
       selectCap.appendChild(opt);
     });
   }
@@ -215,6 +262,7 @@ async function carregarMembrosSelect() {
 
 async function carregarVisitantesSelect() {
   if (!celulaLogada) return;
+
   const { data: visitantes } = await db
     .from('visitantes')
     .select('id, nome')
@@ -224,8 +272,9 @@ async function carregarVisitantesSelect() {
   const select = document.getElementById('presencaVisitante');
   select.innerHTML = '<option value="">-- Selecione o visitante --</option>';
   (visitantes || []).forEach(v => {
-    const opt = document.createElement('option');
-    opt.value = v.id; opt.textContent = v.nome;
+    const opt       = document.createElement('option');
+    opt.value       = v.id;
+    opt.textContent = v.nome;
     select.appendChild(opt);
   });
 }
@@ -251,8 +300,10 @@ async function registrarVisitante() {
     return;
   }
 
+  // Upload da foto
   const fotoUrl = await uploadFoto(file, 'visitantes');
 
+  // Inserir visitante
   const { data: novoVisitante, error } = await db
     .from('visitantes')
     .insert({
@@ -281,6 +332,10 @@ async function registrarVisitante() {
     });
   }
 
+  // Buscar nome do membro que trouxe
+  const nomeMembro = document.getElementById('visitanteMembro')
+    .options[document.getElementById('visitanteMembro').selectedIndex].text;
+
   // Limpar formulário
   document.getElementById('visitanteNome').value       = '';
   document.getElementById('visitanteMembro').value     = '';
@@ -288,12 +343,24 @@ async function registrarVisitante() {
   document.getElementById('fotoInput').value           = '';
   document.getElementById('fotoPreview').style.display = 'none';
 
+  // Mensagem de sucesso
   msgEl.textContent   = `✅ ${nome} registrado! +1 vida na Copa das Vidas! ⚽`;
   msgEl.style.color   = '#4ade80';
   msgEl.style.display = 'block';
   setTimeout(() => { msgEl.style.display = 'none'; }, 3500);
 
-  await Promise.all([carregarVisitantesLista(), carregarVisitantesSelect()]);
+  // 🔔 Notificar todos sobre novo visitante
+  await dispararNotificacao(
+    '⚽ Nova Vida Alcançada!',
+    `${celulaLogada.nome} trouxe ${nome} para a Copa das Vidas! 🙌 (por ${nomeMembro})`,
+    'visitante',
+    '/index.html'
+  );
+
+  await Promise.all([
+    carregarVisitantesLista(),
+    carregarVisitantesSelect()
+  ]);
 }
 
 async function carregarVisitantesLista() {
@@ -337,7 +404,11 @@ async function carregarVisitantesLista() {
         <div class="visitante-info">
           <h4>${v.nome}</h4>
           <p>Trouxe: <strong>${v.membros?.nome || '—'}</strong></p>
-          ${noAlbum ? '<span class="badge-album">📘 No Álbum!</span>' : ''}
+          ${noAlbum
+            ? '<span class="badge-album">📘 No Álbum!</span>'
+            : `<span style="color:var(--texto-sub);font-size:0.75rem">
+                 Faltam ${3 - qtd} presença${3 - qtd > 1 ? 's' : ''} para a figurinha
+               </span>`}
         </div>
         <div class="visitante-presencas">
           <span class="presenca-count">${qtd}</span>
@@ -353,10 +424,10 @@ async function carregarVisitantesLista() {
 // ══════════════════════════════════════════════
 
 async function registrarPresenca() {
-  const visitanteId = document.getElementById('presencaVisitante').value;
-  const evento      = document.getElementById('presencaEvento').value.trim();
-  const data        = document.getElementById('presencaData').value;
-  const msgEl       = document.getElementById('presencaMensagem');
+  const visitanteId  = document.getElementById('presencaVisitante').value;
+  const evento       = document.getElementById('presencaEvento').value.trim();
+  const data         = document.getElementById('presencaData').value;
+  const msgEl        = document.getElementById('presencaMensagem');
 
   msgEl.style.display = 'none';
 
@@ -381,24 +452,49 @@ async function registrarPresenca() {
     return;
   }
 
+  // Verificar total de presenças do visitante
   const { data: todas } = await db
     .from('presencas')
     .select('id')
     .eq('visitante_id', visitanteId);
 
-  const total = todas?.length || 0;
-  let extra   = '';
-  if (total === 3) extra = ' 🎉 Figurinha desbloqueada no álbum!';
-  if (total > 3)  extra = ` 📘 ${total} presenças no total!`;
+  const total          = todas?.length || 0;
+  const nomeVisitante  = document.getElementById('presencaVisitante')
+    .options[document.getElementById('presencaVisitante').selectedIndex].text;
 
+  let extra = '';
+
+  if (total === 3) {
+    extra = ' 🎉 Figurinha desbloqueada no álbum!';
+
+    // 🔔 Notificar sobre nova figurinha
+    await dispararNotificacao(
+      '📘 Nova Figurinha no Álbum!',
+      `${celulaLogada.nome} desbloqueou a figurinha de ${nomeVisitante}! ⭐ Competição acirrada!`,
+      'figurinha',
+      '/album.html'
+    );
+
+  } else if (total > 3) {
+    extra = ` 📘 ${total} presenças no total!`;
+  } else {
+    // Faltam X presenças para a figurinha
+    const faltam = 3 - total;
+    extra = ` ⏳ Falta${faltam > 1 ? 'm' : ''} ${faltam} presença${faltam > 1 ? 's' : ''} para a figurinha!`;
+  }
+
+  // Limpar campo de evento
   document.getElementById('presencaEvento').value = '';
 
-  msgEl.textContent   = `✅ Presença registrada!${extra}`;
+  msgEl.textContent   = `✅ Presença de ${nomeVisitante} registrada!${extra}`;
   msgEl.style.color   = '#4ade80';
   msgEl.style.display = 'block';
-  setTimeout(() => { msgEl.style.display = 'none'; }, 4000);
+  setTimeout(() => { msgEl.style.display = 'none'; }, 4500);
 
-  await Promise.all([carregarHistoricoPresencas(), carregarVisitantesLista()]);
+  await Promise.all([
+    carregarHistoricoPresencas(),
+    carregarVisitantesLista()
+  ]);
 }
 
 async function carregarHistoricoPresencas() {
@@ -485,7 +581,10 @@ async function adicionarMembro() {
   msgEl.style.display = 'block';
   setTimeout(() => { msgEl.style.display = 'none'; }, 3000);
 
-  await Promise.all([carregarListaMembros(), carregarMembrosSelect()]);
+  await Promise.all([
+    carregarListaMembros(),
+    carregarMembrosSelect()
+  ]);
 }
 
 async function carregarListaMembros() {
@@ -516,9 +615,11 @@ async function carregarListaMembros() {
         <div class="visitante-info">
           <h4>
             ${m.nome}
-            ${m.is_capitao ? '<span class="badge-capitao" style="margin-left:0.5rem">🅒 CAPITÃO</span>' : ''}
+            ${m.is_capitao
+              ? '<span class="badge-capitao" style="margin-left:0.5rem">🅒 CAPITÃO</span>'
+              : ''}
           </h4>
-          <p>⚽ Jogador · Minha Célula e +10 · RL Cabo Frio</p>
+          <p>⚽ Jogador · Minha Célula em Campo na Copa · RL Cabo Frio</p>
         </div>
       </div>
     `;
@@ -551,6 +652,8 @@ async function carregarCapitaoAtual() {
   const div  = document.getElementById('capitaoAtual');
   const card = document.getElementById('capitaoAtualCard');
 
+  if (!div || !card) return;
+
   div.style.display = 'block';
 
   const fotoHtml = capitao.foto_url
@@ -563,8 +666,11 @@ async function carregarCapitaoAtual() {
     <div class="visitante-item" style="border-color:var(--ouro)">
       ${fotoHtml}
       <div class="visitante-info">
-        <h4>${capitao.nome} <span class="badge-capitao">🅒 CAPITÃO</span></h4>
-        <p>Capitão do time · Minha Célula e +10</p>
+        <h4>
+          ${capitao.nome}
+          <span class="badge-capitao" style="margin-left:0.5rem">🅒 CAPITÃO</span>
+        </h4>
+        <p>Capitão do time · Minha Célula em Campo na Copa</p>
       </div>
     </div>
   `;
@@ -591,11 +697,9 @@ async function definirCapitao() {
   try {
     // Upload da foto especial do capitão (se houver)
     let fotoUrl = null;
-    if (file) {
-      fotoUrl = await uploadFoto(file, 'capitaes');
-    }
+    if (file) fotoUrl = await uploadFoto(file, 'capitaes');
 
-    // Remover capitão anterior
+    // Remover capitão anterior da célula
     await db
       .from('membros')
       .update({ is_capitao: false })
@@ -616,16 +720,19 @@ async function definirCapitao() {
       .update({ capitao_id: membroId })
       .eq('id', celulaLogada.id);
 
+    // Buscar nome do novo capitão
+    const nomeCap = document.getElementById('capitaoSelect')
+      .options[document.getElementById('capitaoSelect').selectedIndex].text;
+
     // Limpar preview
     document.getElementById('fotoCapitaoInput').value           = '';
     document.getElementById('fotoCapitaoPreview').style.display = 'none';
 
-    msgEl.textContent   = '✅ Capitão definido com sucesso! 🅒 Figurinha especial gerada no álbum!';
+    msgEl.textContent   = `✅ ${nomeCap} é o novo capitão! 🅒 Figurinha especial gerada no álbum!`;
     msgEl.style.color   = '#4ade80';
     msgEl.style.display = 'block';
     setTimeout(() => { msgEl.style.display = 'none'; }, 4000);
 
-    // Recarregar dados
     await Promise.all([
       carregarCapitaoAtual(),
       carregarListaMembros()

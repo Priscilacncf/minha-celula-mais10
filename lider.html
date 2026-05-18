@@ -85,7 +85,7 @@
         <button class="tab active" onclick="abrirAba('visitantes')">👥 Visitantes</button>
         <button class="tab" onclick="abrirAba('presencas')">📅 Presenças</button>
         <button class="tab" onclick="abrirAba('membros')">⚽ Minha Célula</button>
-        <button class="tab" onclick="abrirAba('capitao')">🅒 Capitão</button>
+        <button class="tab" onclick="abrirAba('capitao')">🅒 Técnico</button>
       </div>
 
       <!-- ══════════════════════════════════════
@@ -236,23 +236,23 @@
       </div>
 
       <!-- ══════════════════════════════════════
-           ABA: CAPITÃO
+           ABA: TÉCNICO
            ══════════════════════════════════════ -->
       <div id="abaCapitao" class="aba-content" style="display:none">
 
         <h3 class="section-subtitle">🅒 Definir Capitão do Time</h3>
         <p class="aba-desc">
-          O capitão é o <strong>líder em campo</strong>!
-          Selecione um membro para ser o capitão e faça upload da
+          O técnico é o <strong>líder em campo</strong>!
+          Selecione um membro para ser o técnico e faça upload da
           foto especial da figurinha dourada.
         </p>
 
         <div class="form-card">
 
-          <!-- Capitão atual -->
+          <!-- Técnico atual -->
           <div id="capitaoAtual" class="capitao-atual" style="display:none">
             <h4 style="color:var(--amarelo);margin-bottom:0.75rem">
-              🅒 Capitão Atual
+              🅒 Técnico
             </h4>
             <div id="capitaoAtualCard"></div>
           </div>
@@ -260,18 +260,18 @@
           <h4 style="margin:1rem 0 0.75rem">Definir novo capitão:</h4>
 
           <div class="form-group">
-            <label>Selecione o Membro Capitão *</label>
+            <label>Selecione o Membro Técnico *</label>
             <select id="capitaoSelect">
               <option value="">-- Selecione o membro --</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label>📸 Foto Especial do Capitão (figurinha dourada)</label>
+            <label>📸 Foto Especial do Técnico (figurinha dourada)</label>
             <div class="upload-area"
               onclick="document.getElementById('fotoCapitaoInput').click()">
               <span class="upload-icon">🅒</span>
-              <p>Clique para fazer upload da foto do capitão</p>
+              <p>Clique para fazer upload da foto do técnico</p>
               <p class="upload-hint">JPG, PNG · Máximo 5MB · Figurinha especial dourada!</p>
               <input type="file" id="fotoCapitaoInput" accept="image/*"
                 style="display:none" onchange="previewFotoCapitao(event)"/>

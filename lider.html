@@ -3,8 +3,17 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Área do Líder · Minha célula em Campo na Copa · RL Cabo Frio</title>
+  <title>Área do Líder · Minha Célula em Campo na Copa · RL Cabo Frio</title>
   <link rel="stylesheet" href="css/style.css"/>
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json"/>
+  <meta name="theme-color" content="#002776"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="Célula na Copa"/>
+  <link rel="apple-touch-icon" href="/img/icon-192.png"/>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="lider-page">
@@ -15,14 +24,27 @@
         <span class="logo-icon">⚽</span>
         <div>
           <h1 class="logo-title">ÁREA DO LÍDER</h1>
-          <p class="logo-sub">Minha célula em Capo na Copa · RL Cabo Frio · 2026</p>
+          <p class="logo-sub">
+            <img src="img/logo-rl.png" alt="RL" class="logo-rl"/>
+            Minha Célula em Campo na Copa · RL Cabo Frio · 2026
+          </p>
         </div>
       </div>
       <nav class="header-nav">
+        <button id="btnInstalarApp"
+          onclick="instalarApp()"
+          class="btn-instalar"
+          style="display:none">
+          📲 Instalar App
+        </button>
         <a href="index.html" class="nav-link">🏆 Dashboard</a>
         <a href="album.html" class="nav-link">📘 Álbum</a>
-        <button id="btnLogout" class="nav-link nav-lider"
-          onclick="logout()" style="display:none">🚪 Sair</button>
+        <button id="btnLogout"
+          class="nav-link nav-lider"
+          onclick="logout()"
+          style="display:none">
+          🚪 Sair
+        </button>
       </nav>
     </div>
   </header>
@@ -34,7 +56,7 @@
       <div class="login-card">
         <div class="login-icon">⚽</div>
         <h2>Acesso do Técnico</h2>
-        <p>Entre com os dados da sua célula para gerenciar seu time</p>
+        <p>Entre com os dados da sua célula para gerenciar seu time na Copa das Vidas</p>
         <div class="form-group">
           <label>Célula</label>
           <select id="loginCelula">
@@ -43,7 +65,8 @@
         </div>
         <div class="form-group">
           <label>Senha</label>
-          <input type="password" id="loginSenha" placeholder="Sua senha de acesso"
+          <input type="password" id="loginSenha"
+            placeholder="Sua senha de acesso"
             onkeydown="if(event.key==='Enter') fazerLogin()"/>
         </div>
         <button class="btn btn-primary btn-full" onclick="fazerLogin()">
@@ -53,7 +76,7 @@
       </div>
     </div>
 
-    <!-- PAINEL -->
+    <!-- PAINEL DO LÍDER -->
     <div id="painelLider" style="display:none">
 
       <div class="painel-header" id="painelHeader"></div>
@@ -65,15 +88,23 @@
         <button class="tab" onclick="abrirAba('capitao')">🅒 Capitão</button>
       </div>
 
-      <!-- ABA: VISITANTES -->
+      <!-- ══════════════════════════════════════
+           ABA: VISITANTES
+           ══════════════════════════════════════ -->
       <div id="abaVisitantes" class="aba-content active">
+
         <h3 class="section-subtitle">➕ Registrar Novo Visitante</h3>
-        <p class="aba-desc"><strong>1 nova vida = 1 figurinha em Minha célula em Campo na Copa!</strong></p>
+        <p class="aba-desc">
+          Registre cada nova vida que está conhecendo a célula.
+          <strong>1 nova vida = 1 figurinha na Copa das Vidas!</strong>
+        </p>
+
         <div class="form-card">
           <div class="form-row">
             <div class="form-group">
               <label>Nome do Visitante *</label>
-              <input type="text" id="visitanteNome" placeholder="Nome completo"/>
+              <input type="text" id="visitanteNome"
+                placeholder="Nome completo do visitante"/>
             </div>
             <div class="form-group">
               <label>Quem trouxe? (Artilheiro) *</label>
@@ -82,17 +113,20 @@
               </select>
             </div>
           </div>
+
           <div class="form-group">
-            <label>📸 Foto do Visitante</label>
-            <div class="upload-area" onclick="document.getElementById('fotoInput').click()">
+            <label>📸 Foto do Visitante (para a figurinha no álbum)</label>
+            <div class="upload-area"
+              onclick="document.getElementById('fotoInput').click()">
               <span class="upload-icon">📷</span>
               <p>Clique para fazer upload da foto</p>
-              <p class="upload-hint">JPG, PNG · Máximo 5MB</p>
+              <p class="upload-hint">JPG, PNG · Máximo 5MB · Será usada na figurinha</p>
               <input type="file" id="fotoInput" accept="image/*"
                 style="display:none" onchange="previewFoto(event)"/>
             </div>
             <img id="fotoPreview" class="foto-preview" style="display:none"/>
           </div>
+
           <div class="form-row">
             <div class="form-group">
               <label>📅 Data do primeiro evento</label>
@@ -100,20 +134,35 @@
             </div>
             <div class="form-group">
               <label>🎉 Nome do Evento</label>
-              <input type="text" id="visitanteEvento" placeholder="Ex: Culto, Célula..."/>
+              <input type="text" id="visitanteEvento"
+                placeholder="Ex: Culto, Célula, Copa das Vidas..."/>
             </div>
           </div>
-          <button class="btn btn-primary" onclick="registrarVisitante()">✅ Registrar Visitante</button>
+
+          <button class="btn btn-primary" onclick="registrarVisitante()">
+            ✅ Registrar Visitante
+          </button>
           <p id="visitanteMensagem" class="sucesso-msg" style="display:none"></p>
         </div>
-        <h3 class="section-subtitle" style="margin-top:2rem">📋 Visitantes da Minha Célula</h3>
+
+        <h3 class="section-subtitle" style="margin-top:2rem">
+          📋 Visitantes da Minha Célula
+        </h3>
         <div id="listaVisitantes" class="lista-visitantes"></div>
+
       </div>
 
-      <!-- ABA: PRESENÇAS -->
+      <!-- ══════════════════════════════════════
+           ABA: PRESENÇAS
+           ══════════════════════════════════════ -->
       <div id="abaPresencas" class="aba-content" style="display:none">
+
         <h3 class="section-subtitle">📅 Registrar Presença em Evento</h3>
-        <p class="aba-desc">A cada <strong>3 presenças</strong>, o visitante ganha uma figurinha!</p>
+        <p class="aba-desc">
+          A cada <strong>3 presenças</strong>, o visitante ganha uma
+          figurinha no álbum da Copa das Vidas! 🎉
+        </p>
+
         <div class="form-card">
           <div class="form-row">
             <div class="form-group">
@@ -124,32 +173,47 @@
             </div>
             <div class="form-group">
               <label>Nome do Evento *</label>
-              <input type="text" id="presencaEvento" placeholder="Ex: Culto, Célula..."/>
+              <input type="text" id="presencaEvento"
+                placeholder="Ex: Culto Domingo, Célula, Amistoso..."/>
             </div>
           </div>
           <div class="form-group">
             <label>📅 Data do Evento *</label>
             <input type="date" id="presencaData"/>
           </div>
-          <button class="btn btn-primary" onclick="registrarPresenca()">✅ Registrar Presença</button>
+          <button class="btn btn-primary" onclick="registrarPresenca()">
+            ✅ Registrar Presença
+          </button>
           <p id="presencaMensagem" class="sucesso-msg" style="display:none"></p>
         </div>
-        <h3 class="section-subtitle" style="margin-top:2rem">📊 Histórico de Presenças</h3>
+
+        <h3 class="section-subtitle" style="margin-top:2rem">
+          📊 Histórico de Presenças
+        </h3>
         <div id="historicoPresencas" class="lista-visitantes"></div>
+
       </div>
 
-      <!-- ABA: MEMBROS -->
+      <!-- ══════════════════════════════════════
+           ABA: MEMBROS
+           ══════════════════════════════════════ -->
       <div id="abaMembros" class="aba-content" style="display:none">
+
         <h3 class="section-subtitle">⚽ Adicionar Jogador à Célula</h3>
-        <p class="aba-desc">Cada membro é um <strong>jogador convocado para a Copa das Vidas!</strong></p>
+        <p class="aba-desc">
+          Cada membro é um <strong>jogador convocado para a Copa das Vidas!</strong>
+        </p>
+
         <div class="form-card">
           <div class="form-group">
             <label>Nome do Membro *</label>
-            <input type="text" id="membroNome" placeholder="Nome completo do membro"/>
+            <input type="text" id="membroNome"
+              placeholder="Nome completo do membro"/>
           </div>
           <div class="form-group">
-            <label>📸 Foto do Membro</label>
-            <div class="upload-area" onclick="document.getElementById('fotoMembroInput').click()">
+            <label>📸 Foto do Membro (figurinha básica do álbum)</label>
+            <div class="upload-area"
+              onclick="document.getElementById('fotoMembroInput').click()">
               <span class="upload-icon">📷</span>
               <p>Clique para fazer upload</p>
               <p class="upload-hint">JPG, PNG · Máximo 5MB</p>
@@ -158,40 +222,54 @@
             </div>
             <img id="fotoMembroPreview" class="foto-preview" style="display:none"/>
           </div>
-          <button class="btn btn-primary" onclick="adicionarMembro()">✅ Adicionar ao Elenco</button>
+          <button class="btn btn-primary" onclick="adicionarMembro()">
+            ✅ Adicionar ao Elenco
+          </button>
           <p id="membroMensagem" class="sucesso-msg" style="display:none"></p>
         </div>
-        <h3 class="section-subtitle" style="margin-top:2rem">👥 Elenco da Minha Célula</h3>
+
+        <h3 class="section-subtitle" style="margin-top:2rem">
+          👥 Elenco da Minha Célula
+        </h3>
         <div id="listaMembros" class="lista-visitantes"></div>
+
       </div>
 
-      <!-- ABA: CAPITÃO -->
+      <!-- ══════════════════════════════════════
+           ABA: CAPITÃO
+           ══════════════════════════════════════ -->
       <div id="abaCapitao" class="aba-content" style="display:none">
+
         <h3 class="section-subtitle">🅒 Definir Capitão do Time</h3>
         <p class="aba-desc">
           O capitão é o <strong>líder em campo</strong>!
-          Selecione um membro para ser o capitão e faça upload da foto especial da figurinha.
+          Selecione um membro para ser o capitão e faça upload da
+          foto especial da figurinha dourada.
         </p>
+
         <div class="form-card">
 
           <!-- Capitão atual -->
           <div id="capitaoAtual" class="capitao-atual" style="display:none">
-            <h4 style="color:var(--amarelo);margin-bottom:0.75rem">🅒 Capitão Atual</h4>
+            <h4 style="color:var(--amarelo);margin-bottom:0.75rem">
+              🅒 Capitão Atual
+            </h4>
             <div id="capitaoAtualCard"></div>
           </div>
 
-          <h4 style="margin-bottom:1rem;margin-top:1rem">
-            Definir novo capitão:
-          </h4>
+          <h4 style="margin:1rem 0 0.75rem">Definir novo capitão:</h4>
+
           <div class="form-group">
             <label>Selecione o Membro Capitão *</label>
             <select id="capitaoSelect">
               <option value="">-- Selecione o membro --</option>
             </select>
           </div>
+
           <div class="form-group">
             <label>📸 Foto Especial do Capitão (figurinha dourada)</label>
-            <div class="upload-area" onclick="document.getElementById('fotoCapitaoInput').click()">
+            <div class="upload-area"
+              onclick="document.getElementById('fotoCapitaoInput').click()">
               <span class="upload-icon">🅒</span>
               <p>Clique para fazer upload da foto do capitão</p>
               <p class="upload-hint">JPG, PNG · Máximo 5MB · Figurinha especial dourada!</p>
@@ -200,10 +278,12 @@
             </div>
             <img id="fotoCapitaoPreview" class="foto-preview" style="display:none"/>
           </div>
+
           <button class="btn btn-amarelo" onclick="definirCapitao()">
             🅒 Definir como Capitão
           </button>
           <p id="capitaoMensagem" class="sucesso-msg" style="display:none"></p>
+
         </div>
       </div>
 
@@ -211,10 +291,11 @@
   </main>
 
   <footer class="footer">
-    <p>⚽ Radicais Livres Cabo Frio · Minha célula em Campo na Copa · Copa das Vidas 2026 · <strong>@rlcabofrio</strong></p>
+    <p>⚽ Minha Célula em Campo na Copa · Radicais Livres Cabo Frio · 2026 · <strong>@rlcabofrio</strong></p>
   </footer>
 
   <script src="js/supabase-config.js"></script>
   <script src="js/lider.js"></script>
+  <script src="js/pwa.js"></script>
 </body>
 </html>

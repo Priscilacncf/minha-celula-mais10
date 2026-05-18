@@ -1,0 +1,26 @@
+{
+  "name": "Minha Célula em Campo na Copa",
+  "short_name": "Célula na Copa",
+  "description": "Radicais Livres Cabo Frio · Copa das Vidas 2026",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0e1a",
+  "theme_color": "#002776",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "img/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["social", "lifestyle"],
+  "lang": "pt-BR"
+}

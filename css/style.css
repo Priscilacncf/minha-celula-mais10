@@ -1,7 +1,7 @@
 /* =============================================
    MINHA CÉLULA EM CAMPO NA COPA
    Radicais Livres Cabo Frio · 2026
-   style.css
+   css/style.css
    ============================================= */
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -31,7 +31,7 @@ body {
   min-height: 100vh;
 }
 
-::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar       { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--cinza-bg); }
 ::-webkit-scrollbar-thumb { background: var(--verde); border-radius: 3px; }
 
@@ -47,26 +47,30 @@ body {
 
 .header-content {
   max-width: 1200px; margin: 0 auto;
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap; gap: 0.5rem;
 }
 
 .logo-area  { display: flex; align-items: center; gap: 0.75rem; }
 .logo-icon  { font-size: 2rem; }
-.logo-title { font-size: 1rem; font-weight: 800; color: var(--amarelo); letter-spacing: 1px; }
-.logo-sub   { font-size: 0.72rem; color: var(--texto-sub); display: flex; align-items: center; gap: 3px; }
+.logo-title {
+  font-size: 1rem; font-weight: 800;
+  color: var(--amarelo); letter-spacing: 1px;
+}
+.logo-sub {
+  font-size: 0.72rem; color: var(--texto-sub);
+  display: flex; align-items: center; gap: 3px;
+}
 
 /* ── Logo Radicais Livres ── */
 .logo-rl {
-  height: 16px;
-  width: auto;
-  vertical-align: middle;
-  margin-right: 3px;
-  /* Logo preta com fundo transparente → inverte para branco no header escuro */
-  filter: invert(1);
+  height: 16px; width: auto;
+  vertical-align: middle; margin-right: 3px;
+  filter: invert(1); /* logo preta → branca no header escuro */
 }
 
-.header-nav { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.header-nav { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
 
 .nav-link {
   color: var(--texto); text-decoration: none;
@@ -80,11 +84,29 @@ body {
 .nav-lider       { border-color: var(--amarelo); color: var(--amarelo); }
 .nav-lider:hover { background: var(--amarelo); color: var(--azul); }
 
+/* ── Botão Instalar App PWA ── */
+.btn-instalar {
+  background: var(--amarelo); color: var(--azul);
+  border: none; border-radius: 20px;
+  padding: 0.4rem 0.9rem; font-size: 0.82rem;
+  font-weight: 800; cursor: pointer;
+  transition: all 0.2s;
+  animation: pulse-install 2s infinite;
+}
+.btn-instalar:hover { background: #fce000; transform: scale(1.05); }
+
+@keyframes pulse-install {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,223,0,0.5); }
+  50%       { box-shadow: 0 0 0 8px rgba(255,223,0,0); }
+}
+
 /* =============================================
    LAYOUT
    ============================================= */
-.container { max-width: 1200px; margin: 0 auto; padding: 1.5rem; }
-.section   { margin-bottom: 2.5rem; }
+.container {
+  max-width: 1200px; margin: 0 auto; padding: 1.5rem;
+}
+.section { margin-bottom: 2.5rem; }
 
 .section-title {
   font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem;
@@ -93,7 +115,8 @@ body {
 }
 
 .section-title-row {
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap; gap: 0.75rem;
   padding-bottom: 0.5rem; margin-bottom: 0.75rem;
   border-bottom: 1px solid var(--cinza-border);
@@ -112,9 +135,7 @@ body {
 /* =============================================
    FILTRO DE PERÍODO
    ============================================= */
-.filtro-periodo {
-  display: flex; gap: 0.4rem; flex-wrap: wrap;
-}
+.filtro-periodo { display: flex; gap: 0.4rem; flex-wrap: wrap; }
 
 .filtro-btn {
   background: var(--cinza-card); color: var(--texto-sub);
@@ -139,7 +160,8 @@ body {
 }
 
 .filtro-data-custom {
-  display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+  display: flex; align-items: center;
+  gap: 0.5rem; flex-wrap: wrap;
 }
 
 .filtro-data-custom input[type="date"] {
@@ -147,7 +169,6 @@ body {
   border: 1px solid var(--cinza-border); border-radius: 8px;
   padding: 0.35rem 0.75rem; font-size: 0.82rem; width: auto;
 }
-
 .filtro-data-custom input[type="date"]:focus {
   border-color: var(--verde); outline: none;
 }
@@ -158,8 +179,9 @@ body {
 .banner {
   background: linear-gradient(135deg, var(--azul), var(--verde));
   border-radius: var(--radius); padding: 2rem; margin-bottom: 2.5rem;
-  display: flex; flex-wrap: wrap; justify-content: space-between;
-  align-items: center; gap: 1.5rem; border: 1px solid var(--cinza-border);
+  display: flex; flex-wrap: wrap;
+  justify-content: space-between; align-items: center;
+  gap: 1.5rem; border: 1px solid var(--cinza-border);
 }
 .banner-text h2 {
   font-size: 1.6rem; font-weight: 900;
@@ -172,12 +194,16 @@ body {
 .banner-stats { display: flex; gap: 1rem; flex-wrap: wrap; }
 
 .stat-card {
-  background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.2);
   border-radius: var(--radius); padding: 1rem 1.5rem;
   text-align: center; min-width: 100px;
 }
-.stat-number { display: block; font-size: 2rem; font-weight: 900; color: var(--amarelo); }
-.stat-label  {
+.stat-number {
+  display: block; font-size: 2rem;
+  font-weight: 900; color: var(--amarelo);
+}
+.stat-label {
   display: block; font-size: 0.68rem;
   color: rgba(255,255,255,0.75);
   text-transform: uppercase; letter-spacing: 1px;
@@ -187,9 +213,11 @@ body {
    VISÃO
    ============================================= */
 .visao-card {
-  background: linear-gradient(135deg, rgba(0,39,118,0.4), rgba(0,156,59,0.2));
-  border: 1px solid var(--verde); border-radius: var(--radius);
-  padding: 1.5rem; font-size: 1rem; line-height: 1.7;
+  background: linear-gradient(135deg,
+    rgba(0,39,118,0.4), rgba(0,156,59,0.2));
+  border: 1px solid var(--verde);
+  border-radius: var(--radius); padding: 1.5rem;
+  font-size: 1rem; line-height: 1.7;
   color: var(--texto); text-align: center;
 }
 
@@ -210,13 +238,16 @@ body {
   font-size: 1.3rem; font-weight: 800; color: var(--branco);
   letter-spacing: 2px; margin: 0.5rem 0 1rem;
 }
-.coracao-card p { color: var(--texto-sub); font-size: 1rem; }
-.coracao-regras {
-  display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;
+.coracao-card p  { color: var(--texto-sub); font-size: 1rem; }
+.coracao-regras  {
+  display: flex; justify-content: center;
+  gap: 2rem; flex-wrap: wrap;
   margin-top: 1.5rem; padding-top: 1.5rem;
   border-top: 1px solid var(--cinza-border);
 }
-.coracao-regras span { color: var(--amarelo); font-weight: 700; font-size: 0.95rem; }
+.coracao-regras span {
+  color: var(--amarelo); font-weight: 700; font-size: 0.95rem;
+}
 
 /* =============================================
    CONCEITO / OBJETIVOS
@@ -227,9 +258,10 @@ body {
   gap: 1rem;
 }
 .conceito-card {
-  background: var(--cinza-card); border: 1px solid var(--cinza-border);
-  border-radius: var(--radius); padding: 1.5rem; text-align: center;
-  transition: transform 0.2s, border-color 0.2s;
+  background: var(--cinza-card);
+  border: 1px solid var(--cinza-border);
+  border-radius: var(--radius); padding: 1.5rem;
+  text-align: center; transition: transform 0.2s, border-color 0.2s;
 }
 .conceito-card:hover { transform: translateY(-3px); border-color: var(--verde); }
 .conceito-icon       { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
@@ -242,12 +274,13 @@ body {
 .artilheiro-card {
   background: linear-gradient(135deg, var(--cinza-card), #1a2234);
   border: 2px solid var(--ouro); border-radius: var(--radius);
-  padding: 1.5rem; display: flex; align-items: center; gap: 1.5rem;
-  box-shadow: 0 0 20px rgba(255,215,0,0.15); flex-wrap: wrap;
-  margin-top: 0.75rem;
+  padding: 1.5rem; display: flex; align-items: center;
+  gap: 1.5rem; box-shadow: 0 0 20px rgba(255,215,0,0.15);
+  flex-wrap: wrap; margin-top: 0.75rem;
 }
 .artilheiro-card.loading {
-  justify-content: center; border-color: var(--cinza-border); box-shadow: none;
+  justify-content: center;
+  border-color: var(--cinza-border); box-shadow: none;
 }
 .artilheiro-foto {
   width: 90px; height: 90px; border-radius: 50%;
@@ -262,8 +295,13 @@ body {
 .artilheiro-info h3 { font-size: 1.4rem; color: var(--ouro); font-weight: 800; }
 .artilheiro-info p  { color: var(--texto-sub); font-size: 0.9rem; }
 .artilheiro-gols    { margin-left: auto; text-align: center; }
-.artilheiro-gols .num { font-size: 3rem; font-weight: 900; color: var(--amarelo); line-height: 1; }
-.artilheiro-gols .lab { font-size: 0.75rem; color: var(--texto-sub); text-transform: uppercase; }
+.artilheiro-gols .num {
+  font-size: 3rem; font-weight: 900;
+  color: var(--amarelo); line-height: 1;
+}
+.artilheiro-gols .lab {
+  font-size: 0.75rem; color: var(--texto-sub); text-transform: uppercase;
+}
 
 /* =============================================
    RANKING TABLE
@@ -272,16 +310,20 @@ body {
 
 .ranking-table {
   width: 100%; border-collapse: collapse;
-  background: var(--cinza-card); border-radius: var(--radius); overflow: hidden;
+  background: var(--cinza-card);
+  border-radius: var(--radius); overflow: hidden;
 }
 .ranking-table th {
   background: var(--azul); color: var(--amarelo);
   padding: 0.85rem 1rem; text-align: left;
   font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;
 }
-.ranking-table td { padding: 0.85rem 1rem; border-bottom: 1px solid var(--cinza-border); }
+.ranking-table td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--cinza-border);
+}
 .ranking-table tr:last-child td { border-bottom: none; }
-.ranking-table tr:hover td { background: rgba(255,255,255,0.03); }
+.ranking-table tr:hover td      { background: rgba(255,255,255,0.03); }
 
 .pos-badge {
   width: 28px; height: 28px; border-radius: 50%;
@@ -309,13 +351,18 @@ body {
   gap: 1rem; margin-top: 0.75rem;
 }
 .artilheiro-celula-card {
-  background: var(--cinza-card); border: 1px solid var(--cinza-border);
-  border-radius: var(--radius); padding: 1.25rem; transition: transform 0.2s;
+  background: var(--cinza-card);
+  border: 1px solid var(--cinza-border);
+  border-radius: var(--radius); padding: 1.25rem;
+  text-align: center; transition: transform 0.2s;
 }
 .artilheiro-celula-card:hover { transform: translateY(-3px); border-color: var(--verde); }
-.artilheiro-celula-card h4    { color: var(--verde); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.75rem; }
-.artilheiro-celula-nome       { font-size: 1.05rem; font-weight: 700; }
-.artilheiro-celula-gols       { color: var(--amarelo); font-size: 0.9rem; margin-top: 0.25rem; }
+.artilheiro-celula-card h4    {
+  color: var(--verde); font-size: 0.8rem;
+  text-transform: uppercase; margin-bottom: 0.75rem;
+}
+.artilheiro-celula-nome { font-size: 1.05rem; font-weight: 700; }
+.artilheiro-celula-gols { color: var(--amarelo); font-size: 0.9rem; margin-top: 0.25rem; }
 
 /* =============================================
    RARIDADES / DESAFIOS
@@ -329,12 +376,19 @@ body {
   border-radius: var(--radius); padding: 1.5rem;
   text-align: center; border: 1px solid transparent;
 }
-.desafio-icon           { font-size: 2rem; display: block; }
-.desafio-card h3        { font-size: 0.9rem; font-weight: 800; letter-spacing: 1px; margin: 0.5rem 0 0.3rem; }
-.desafio-card p         { font-size: 0.85rem; color: rgba(255,255,255,0.85); }
-.desafio-como           { font-size: 0.72rem !important; color: rgba(255,255,255,0.55) !important; margin-top: 0.5rem; text-transform: uppercase; letter-spacing: 0.5px; }
-.desafio-impacto        { margin-top: 0.5rem; font-size: 0.78rem !important; color: rgba(255,255,255,0.7) !important; }
-.desafio-impacto strong { color: #fff; }
+.desafio-icon    { font-size: 2rem; display: block; }
+.desafio-card h3 {
+  font-size: 0.9rem; font-weight: 800;
+  letter-spacing: 1px; margin: 0.5rem 0 0.3rem;
+}
+.desafio-card p  { font-size: 0.85rem; color: rgba(255,255,255,0.85); }
+.desafio-como    {
+  font-size: 0.72rem !important;
+  color: rgba(255,255,255,0.55) !important;
+  margin-top: 0.5rem; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.desafio-impacto         { margin-top: 0.5rem; font-size: 0.78rem !important; color: rgba(255,255,255,0.7) !important; }
+.desafio-impacto strong  { color: #fff; }
 
 .bronze   { background: rgba(205,127,50,0.15);  border-color: var(--bronze); }
 .prata    { background: rgba(192,192,192,0.15); border-color: var(--prata); }
@@ -350,9 +404,10 @@ body {
   gap: 1rem;
 }
 .cronograma-card {
-  background: var(--cinza-card); border: 1px solid var(--cinza-border);
-  border-radius: var(--radius); padding: 1.5rem; text-align: center;
-  transition: transform 0.2s, border-color 0.2s;
+  background: var(--cinza-card);
+  border: 1px solid var(--cinza-border);
+  border-radius: var(--radius); padding: 1.5rem;
+  text-align: center; transition: transform 0.2s, border-color 0.2s;
   position: relative; overflow: hidden;
 }
 .cronograma-card:hover { transform: translateY(-3px); border-color: var(--amarelo); }
@@ -373,10 +428,14 @@ body {
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 0.75rem; margin-bottom: 1.5rem;
 }
-.tipo-card       { border-radius: var(--radius); padding: 1rem; text-align: center; border: 1px solid var(--cinza-border); }
-.tipo-card span  { font-size: 1.5rem; display: block; margin-bottom: 0.35rem; }
-.tipo-card h4    { font-size: 0.8rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 0.25rem; }
-.tipo-card p     { font-size: 0.78rem; color: var(--texto-sub); }
+.tipo-card {
+  border-radius: var(--radius); padding: 1rem;
+  text-align: center; border: 1px solid var(--cinza-border);
+}
+.tipo-card span { font-size: 1.5rem; display: block; margin-bottom: 0.35rem; }
+.tipo-card h4   { font-size: 0.8rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 0.25rem; }
+.tipo-card p    { font-size: 0.78rem; color: var(--texto-sub); }
+
 .tipo-basica     { background: rgba(0,156,59,0.1);   border-color: var(--verde); }
 .tipo-capitao    { background: rgba(255,215,0,0.15); border-color: var(--ouro); }
 .tipo-visitante  { background: rgba(255,223,0,0.1);  border-color: var(--amarelo); }
@@ -392,8 +451,10 @@ body {
 select {
   background: var(--cinza-card); color: var(--texto);
   border: 1px solid var(--cinza-border); border-radius: 8px;
-  padding: 0.5rem 1rem; font-size: 0.95rem; cursor: pointer; min-width: 200px;
+  padding: 0.5rem 1rem; font-size: 0.95rem;
+  cursor: pointer; min-width: 200px;
 }
+select:focus { outline: none; border-color: var(--verde); }
 
 /* =============================================
    ÁLBUM
@@ -408,19 +469,25 @@ select {
 
 .album-progresso {
   background: var(--cinza-card); border-radius: var(--radius);
-  padding: 1.25rem; margin-bottom: 1.5rem; border: 1px solid var(--cinza-border);
+  padding: 1.25rem; margin-bottom: 1.5rem;
+  border: 1px solid var(--cinza-border);
 }
 .album-progresso-label {
   display: flex; justify-content: space-between;
   margin-bottom: 0.5rem; font-weight: 600;
 }
-.album-progresso-barra { height: 16px; background: var(--cinza-border); border-radius: 8px; }
-.album-progresso-fill  {
+.album-progresso-barra {
+  height: 16px; background: var(--cinza-border); border-radius: 8px;
+}
+.album-progresso-fill {
   height: 100%; border-radius: 8px;
   background: linear-gradient(90deg, var(--verde), var(--amarelo));
   transition: width 1s ease;
 }
-.album-info { color: var(--texto-sub); font-size: 0.9rem; margin-bottom: 1rem; line-height: 1.6; }
+.album-info {
+  color: var(--texto-sub); font-size: 0.9rem;
+  margin-bottom: 1rem; line-height: 1.6;
+}
 
 /* =============================================
    FIGURINHAS
@@ -430,6 +497,7 @@ select {
   grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   gap: 1rem;
 }
+
 .figurinha {
   background: linear-gradient(135deg, #fff 0%, #f0f4ff 100%);
   border-radius: 10px; padding: 0.5rem; text-align: center;
@@ -442,8 +510,9 @@ select {
   background: linear-gradient(90deg, var(--verde), var(--amarelo), var(--azul));
 }
 .figurinha-foto {
-  width: 80px; height: 80px; border-radius: 50%; object-fit: cover;
-  border: 2px solid var(--azul); display: block; margin: 0.5rem auto;
+  width: 80px; height: 80px; border-radius: 50%;
+  object-fit: cover; border: 2px solid var(--azul);
+  display: block; margin: 0.5rem auto;
 }
 .figurinha-avatar {
   width: 80px; height: 80px; border-radius: 50%;
@@ -451,9 +520,10 @@ select {
   display: flex; align-items: center; justify-content: center;
   font-size: 1.8rem; margin: 0.5rem auto; border: 2px solid var(--azul);
 }
-.figurinha-nome  {
+.figurinha-nome {
   font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
-  letter-spacing: 0.5px; color: var(--azul); margin-top: 0.3rem; line-height: 1.2;
+  letter-spacing: 0.5px; color: var(--azul);
+  margin-top: 0.3rem; line-height: 1.2;
 }
 .figurinha-sub   { font-size: 0.65rem; color: #666; margin-top: 0.2rem; }
 .figurinha-badge {
@@ -463,11 +533,14 @@ select {
 }
 .figurinha-vazia {
   background: var(--cinza-card); border: 2px dashed var(--cinza-border);
-  border-radius: 10px; padding: 0.5rem; text-align: center; min-height: 155px;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border-radius: 10px; padding: 0.5rem; text-align: center;
+  min-height: 155px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
 }
 .figurinha-vazia .empty-icon { font-size: 2rem; opacity: 0.3; }
-.figurinha-vazia .empty-txt  { font-size: 0.7rem; color: var(--texto-sub); margin-top: 0.3rem; }
+.figurinha-vazia .empty-txt  {
+  font-size: 0.7rem; color: var(--texto-sub); margin-top: 0.3rem;
+}
 
 /* =============================================
    CAPITÃO DO TIME
@@ -504,8 +577,7 @@ select {
 .capitao-atual {
   background: rgba(255,215,0,0.08);
   border: 1px solid var(--ouro);
-  border-radius: var(--radius); padding: 1rem;
-  margin-bottom: 1rem;
+  border-radius: var(--radius); padding: 1rem; margin-bottom: 1rem;
 }
 
 /* =============================================
@@ -517,7 +589,8 @@ select {
 }
 .login-card {
   background: var(--cinza-card); border: 1px solid var(--cinza-border);
-  border-radius: var(--radius); padding: 2.5rem; width: 100%; max-width: 420px;
+  border-radius: var(--radius); padding: 2.5rem;
+  width: 100%; max-width: 420px;
   box-shadow: var(--shadow); text-align: center;
 }
 .login-icon     { font-size: 3rem; margin-bottom: 0.75rem; }
@@ -540,26 +613,32 @@ input[type="date"],
 textarea {
   width: 100%; background: rgba(255,255,255,0.05);
   border: 1px solid var(--cinza-border); border-radius: 8px;
-  color: var(--texto); padding: 0.6rem 0.9rem; font-size: 0.95rem;
-  transition: border-color 0.2s;
+  color: var(--texto); padding: 0.6rem 0.9rem;
+  font-size: 0.95rem; transition: border-color 0.2s;
 }
-input:focus, select:focus { outline: none; border-color: var(--verde); }
+input:focus, textarea:focus { outline: none; border-color: var(--verde); }
 
-.form-row  { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+}
 .form-card {
   background: var(--cinza-card); border-radius: var(--radius);
   padding: 1.5rem; border: 1px solid var(--cinza-border); margin-bottom: 1rem;
 }
+
 .upload-area {
   border: 2px dashed var(--cinza-border); border-radius: 8px;
-  padding: 1.5rem; text-align: center; cursor: pointer; transition: border-color 0.2s;
+  padding: 1.5rem; text-align: center;
+  cursor: pointer; transition: border-color 0.2s;
 }
 .upload-area:hover { border-color: var(--verde); }
 .upload-icon { font-size: 2rem; }
 .upload-hint { font-size: 0.75rem; color: var(--texto-sub); margin-top: 0.25rem; }
+
 .foto-preview {
-  width: 100px; height: 100px; border-radius: 50%; object-fit: cover;
-  margin-top: 0.75rem; border: 2px solid var(--verde); display: block;
+  width: 100px; height: 100px; border-radius: 50%;
+  object-fit: cover; margin-top: 0.75rem;
+  border: 2px solid var(--verde); display: block;
 }
 
 /* =============================================
@@ -576,8 +655,8 @@ input:focus, select:focus { outline: none; border-color: var(--verde); }
 .btn-full            { width: 100%; margin-top: 0.5rem; }
 .btn-sm              { padding: 0.4rem 0.9rem; font-size: 0.8rem; }
 .btn-danger          { background: #ef4444; color: #fff; }
-.btn-amarelo         { background: var(--amarelo); color: var(--azul); }
-.btn-amarelo:hover   { background: #fce000; }
+.btn-amarelo         { background: var(--amarelo); color: var(--azul); font-weight: 800; }
+.btn-amarelo:hover   { background: #fce000; transform: translateY(-1px); }
 
 /* =============================================
    TABS
@@ -597,8 +676,9 @@ input:focus, select:focus { outline: none; border-color: var(--verde); }
    ============================================= */
 .painel-header {
   background: linear-gradient(135deg, var(--azul), var(--verde));
-  border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 1.5rem;
-  display: flex; align-items: center; justify-content: space-between;
+  border-radius: var(--radius); padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem; display: flex;
+  align-items: center; justify-content: space-between;
   flex-wrap: wrap; gap: 1rem;
 }
 .painel-header h2 { color: var(--amarelo); font-size: 1.2rem; }
@@ -613,7 +693,10 @@ input:focus, select:focus { outline: none; border-color: var(--verde); }
   background: var(--cinza-card); border-radius: var(--radius);
   padding: 1rem 1.25rem; border: 1px solid var(--cinza-border);
   display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+  transition: border-color 0.2s;
 }
+.visitante-item:hover { border-color: var(--verde); }
+
 .visitante-foto {
   width: 48px; height: 48px; border-radius: 50%;
   object-fit: cover; border: 2px solid var(--verde); flex-shrink: 0;
@@ -624,22 +707,29 @@ input:focus, select:focus { outline: none; border-color: var(--verde); }
   display: flex; align-items: center; justify-content: center;
   font-size: 1.2rem; flex-shrink: 0;
 }
+.visitante-info      { flex: 1; min-width: 120px; }
 .visitante-info h4   { font-size: 1rem; font-weight: 700; }
-.visitante-info p    { font-size: 0.8rem; color: var(--texto-sub); }
+.visitante-info p    { font-size: 0.8rem; color: var(--texto-sub); margin-top: 0.15rem; }
 .visitante-presencas { margin-left: auto; text-align: center; }
-.presenca-count      { font-size: 1.5rem; font-weight: 900; color: var(--verde); display: block; line-height: 1; }
-.presenca-label      { font-size: 0.65rem; color: var(--texto-sub); text-transform: uppercase; }
-.badge-album         {
+.presenca-count      {
+  font-size: 1.5rem; font-weight: 900;
+  color: var(--verde); display: block; line-height: 1;
+}
+.presenca-label {
+  font-size: 0.65rem; color: var(--texto-sub); text-transform: uppercase;
+}
+.badge-album {
   background: var(--ouro); color: var(--azul); font-size: 0.7rem;
-  font-weight: 800; padding: 0.2rem 0.5rem; border-radius: 20px; display: inline-block;
+  font-weight: 800; padding: 0.2rem 0.5rem;
+  border-radius: 20px; display: inline-block; margin-top: 0.25rem;
 }
 
 /* =============================================
    MENSAGENS
    ============================================= */
-.sucesso-msg { color: #4ade80; font-size: 0.9rem; margin-top: 0.75rem; }
-.erro-msg    { color: #f87171; font-size: 0.9rem; margin-top: 0.75rem; }
-.loading-text{ color: var(--texto-sub); font-style: italic; padding: 1rem 0; }
+.sucesso-msg  { color: #4ade80; font-size: 0.9rem; margin-top: 0.75rem; }
+.erro-msg     { color: #f87171; font-size: 0.9rem; margin-top: 0.75rem; }
+.loading-text { color: var(--texto-sub); font-style: italic; padding: 1rem 0; }
 
 /* =============================================
    FOOTER
@@ -650,7 +740,7 @@ input:focus, select:focus { outline: none; border-color: var(--verde); }
 }
 
 /* =============================================
-   RESPONSIVO
+   RESPONSIVO — TABLET
    ============================================= */
 @media (max-width: 768px) {
   .banner                { flex-direction: column; }
@@ -667,18 +757,56 @@ input:focus, select:focus { outline: none; border-color: var(--verde); }
   .filtro-periodo        { width: 100%; }
   .filtro-data-wrapper   { align-items: flex-start; width: 100%; }
   .filtro-data-custom    { width: 100%; }
+  .ranking-table th,
+  .ranking-table td      { padding: 0.6rem 0.5rem; font-size: 0.8rem; }
 }
 
+/* =============================================
+   RESPONSIVO — MOBILE
+   ============================================= */
 @media (max-width: 480px) {
   .header-content        { flex-direction: column; align-items: flex-start; }
+  .header-nav            { width: 100%; justify-content: flex-start; }
+  .logo-title            { font-size: 0.85rem; }
+  .logo-rl               { height: 13px; }
   .stat-card             { min-width: 80px; }
-  .banner-stats          { justify-content: center; }
+  .banner-stats          { justify-content: center; width: 100%; }
   .conceito-grid,
   .cronograma-grid,
   .desafios-grid,
   .tipos-grid            { grid-template-columns: 1fr; }
   .tabs                  { flex-direction: column; }
+  .tab                   { text-align: center; }
   .coracao-numero        { font-size: 3.5rem; }
   .filtro-btn            { font-size: 0.72rem; padding: 0.3rem 0.65rem; }
-  .logo-rl               { height: 13px; }
+  .artilheiros-grid      { grid-template-columns: 1fr; }
+  .figurinhas-grid       { grid-template-columns: repeat(3, 1fr); }
+  .login-card            { padding: 1.5rem; }
+  .painel-header         { flex-direction: column; }
+  .visitante-item        { flex-wrap: wrap; }
+  .btn-instalar          { font-size: 0.75rem; padding: 0.35rem 0.75rem; }
+}
+
+/* =============================================
+   ANIMAÇÕES GERAIS
+   ============================================= */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.section      { animation: fadeIn 0.4s ease both; }
+.stat-card    { animation: fadeIn 0.5s ease both; }
+.conceito-card,
+.desafio-card,
+.cronograma-card { animation: fadeIn 0.4s ease both; }
+
+/* =============================================
+   PWA — SPLASH / OFFLINE
+   ============================================= */
+.offline-banner {
+  background: #ef4444; color: #fff;
+  text-align: center; padding: 0.5rem;
+  font-size: 0.85rem; font-weight: 700;
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 999;
 }
